@@ -1,0 +1,85 @@
+#!/bin/bash 
+# process arguments and flags 
+generate_hborder() {
+    border_char=${border_char:-"="}
+    hborder=""
+    thought_len=$((${#thought} + 2))
+    for (( i = 0; i < $thought_len; i++)); do
+        hborder="${hborder}${border_char}"
+    done
+}
+positional_args=()
+    while test $# -gt 0
+    do
+        case "$1" in
+        -h|--help)
+            cat <<EOF
+
+Usage: catsay [options] [thought]
+
+Options:
+    -h, --help  Show this help message and exit
+    -d <dir>    Specify the directory where the cat files are located
+    -c <cat>    Specify the cat file to use
+    -r          Use a random cat
+    -l <length> Specify the Maximum length of the cat
+    -w <width>  Specify the Maximum width of the cat
+EOF
+            exit
+            ;;
+        -d | --dir)
+            shift
+            dir="$1"
+            shift
+            ;;
+        -c | --cat)
+            shift
+            cat="$1"
+            shift
+            ;;
+        -r | --random)
+            shift
+            random="true"
+            shift
+            ;;
+        
+        -l | --length)
+            shift
+            length="$1"
+            shift
+            ;;
+        -w | --width)
+            shift
+            width="$1"
+            shift
+            ;;
+        *)  
+            positional_args+=("$1")
+            shift
+            ;;
+    esac
+done
+thought="${positional_args[@]}"
+if [ -z "$thought" ]; then
+    thought="Meow"
+fi
+if [ -z "$dir" ]; then
+    dir="./cats"
+fi
+cats=()
+for i in "$dir"/*; do
+    if [ -f "$i" ]; then
+        cats+=("$i")
+    fi
+done
+if [[ -z "${cats[*]}" ]]; then
+    echo "No cat files found in $dir"
+    exit 1
+fi
+if [ -n "$random" ]; then
+    cat="$(basename ${cats[$RANDOM % ${#cats[@]}]})"
+fi
+cat="${cat:-longcat}"
+. "$dir/$cat"
+printf "%s""${!cat}"
+echo ""

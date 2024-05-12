@@ -1,0 +1,17 @@
+pad_len=$((${#thought} /2))
+for (( i = 0; i < $pad_len; i++)); do
+    wallcat="${wallcat} "
+done
+wallcat="${wallcat}  |\__/,|   (\`\\\\\\n"
+for (( i = 0; i < $pad_len; i++)); do
+    wallcat="${wallcat} "
+done
+wallcat="${wallcat}_.|o o  |_   ) )\n"
+for(( i = 0; i < $pad_len; i++)); do
+    wallcat="${wallcat}-"
+done
+wallcat="${wallcat}-(((---(((---------"
+for(( i = 0; i < $pad_len; i++)); do
+    wallcat="${wallcat}-"
+done
+wallcat="${wallcat}\n${thought}"

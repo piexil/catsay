@@ -1,0 +1,29 @@
+# https://github.com/sckott/cowsay/blob/main/R/animals.r
+length=${length:-"4"}
+width=${width:-"4"}
+border_char="+"
+length=${length:-"1"}
+generate_hborder
+longcat="${hborder}\n"
+longcat="${longcat}$(printf '%s\n' " ${thought}")"
+longcat="${longcat}\n"
+longcat="${longcat}${hborder}"
+padding=" "
+for ((i = 0; i < $width - 2; i++)); do
+    padding="${padding} "
+done
+longcat="${longcat}${padding}"
+scale=2
+halfpadding=${padding:0:${#padding}/2}
+longcat="${longcat}\n"
+longcat="${longcat} \\\\ \\\\ \n  \\\\ \\\\ 
+    .\uFF8A,,\uFF8A
+    ( ${halfpadding::-1}\uFF9F\u03C9\uFF9F${halfpadding::-1})
+    |\u3064${padding::-1}\u3064
+"
+for ((i = 0; i < $length; i++)); do
+    longcat="${longcat}    |${padding}|          \n"
+done    
+padding="${padding::-2}"
+longcat="${longcat}    U \"${padding}U            \n"
+longcat="${longcat}        [BoingBoing]    \n"

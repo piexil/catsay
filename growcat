@@ -1,0 +1,99 @@
+#!/bin/bash
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" &>/dev/null && pwd)"
+#include script dir in path
+PATH="$SCRIPT_DIR:$PATH"
+# process args and flags
+clear_exe="clear"
+grow_params='-l '
+pos_args=()
+while test $# -gt 0; do
+    case "$1" in
+    -h | --help)
+        cat <<EOF
+
+Usage: growcat [options] [thought]
+
+Options:
+    -h, --help  Show this help message and exit
+    -d <dir>    Specify the directory where the cat files are located
+    -c <cat>    Specify the cat file to use
+    -l <length> Specify the Maximum length of the cat
+    -e          Grow width instead of length, else it will do both if both are set
+    -q          Shrink instead of grow
+    -w <width>  Specify the Maximum width of the cat
+    -s <length> Specify the Minimum length of the cat
+    -x <width>  Specify the Minimum width of the cat
+    -t <time>   Time inbetween frames in seconds (default: 0.2)
+    -n          Do not use clear
+
+EOF
+        exit
+        ;;
+    -d | --dir)
+        shift
+        dir="$1"
+        shift
+        ;;
+    -c | --cat)
+        shift
+        cat="$1"
+        shift
+        ;;
+    -l | --long | -w | --width)
+        shift
+        length="$1"
+        shift
+        ;;
+    -s | --short)
+        shift
+        min_length="$1"
+        shift
+        ;;
+    -e)
+        shift
+        grow_params='-w '
+        ;;
+    -b)
+        shift
+        grow_params='-w -l '
+        ;;
+    -q)
+        shift
+        shrink="true"
+        ;;
+    -t | --time)
+        shift
+        sleep_time="$1"
+        shift
+        ;;
+    -n)
+        shift
+        clear_exe="tput rc"
+        ;;
+    *)
+        pos_args+=("$1")
+        shift
+        ;;
+    esac
+done
+thought="${pos_args[@]:-"Time to get long"}"
+dir="${dir:-"./cats"}"
+cat="${cat:-"longcat"}"
+min_length="${min_length:-"1"}"
+length="${length:-"8"}"
+tput sc
+if [ -n "$shrink" ]; then
+    for ((i = ${length}; i >= "${min_length}"; i--)); do
+        cat_buffer=$(catsay -d $dir -c $cat ${grow_params// / $i } "$thought")
+        $clear_exe
+        echo "$cat_buffer"
+        sleep ${sleep_time:-"0.2"}
+    done
+else
+    for ((i = ${min_length}; i <= "${length}"; i++)); do
+        cat_buffer=$(catsay -d $dir -c $cat ${grow_params// / $i } "$thought")
+        $clear_exe
+        echo "$cat_buffer"
+        sleep ${sleep_time:-"0.2"}
+    done
+fi

@@ -1,0 +1,13 @@
+border_char="o"
+bc=${border_char}
+generate_hborder
+lion="
+${hborder}${bc}${bc}\n${bc} ${thought} ${bc}\n${hborder}${bc}${bc}
+   \\
+    \\
+      /\";;:;;\"\\
+    (:;/\\,-,/\\;;)
+   (:;{  d b  }:;)
+    (:;\__Y__/;;)-----------,,_
+     ,..\\  ,..\\      ___/___)__\`\\
+ldb (,,,)~(,,,)\`-._##____________)"

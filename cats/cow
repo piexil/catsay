@@ -1,0 +1,36 @@
+length=${length:-"1"}
+width=${width:-"8"}
+border_char="_"
+generate_hborder
+cow=" ${hborder}\n"
+#thought="$(echo "${thought}" | fmt -w 45)"
+cow="${cow}< ${thought} >\n"
+cowtop="_______"
+if [[ $width -gt 8 ]]; then
+    for (( i = 0; i < $width - 8; i++)); do
+    cowtop="${cowtop}_"
+    done
+fi
+padding=""
+for (( i = 0; i < $width -1; i++)); do
+    padding="${padding} "
+done
+cow="${cow} ${hborder}"
+cowbottom="----"
+if [[ $width -gt 8 ]]; then
+    for (( i = 0; i < $width - 8; i++)); do
+    cowbottom="${cowbottom}-"
+    done
+fi
+cow="${cow}
+        \   ^__^
+         \  (oo)\\${cowtop}
+            (__)\\${padding})\/\\
+"
+for (( i = 0; i < $length - 1; i++)); do
+cow="${cow}                ||${padding} |\n"
+done
+cow="${cow}                ||${cowbottom}w |\n"
+padding=${padding::-1}
+cow="${cow}                ||${padding}||\n"
+cow="${cow}                ||${padding}||\n"
