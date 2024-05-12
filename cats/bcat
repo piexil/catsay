@@ -1,0 +1,16 @@
+# https://www.reddit.com/r/HelpMeFind/comments/vauzis/ascii_cat_im_looking_for_a_copypasteable_version/
+generate_hborder
+bcat="${hborder}
+"
+bcat="${bcat} ${thought}"
+bcat="${bcat} 
+${hborder}"
+bcat="${bcat}
+ \\"
+bcat="${bcat}
+  \\
+"
+bcat="${bcat}    ／l、
+  （ﾟ､ ｡ ７ 　
+  　l、~ ヽ
+  　ししと ）ノ" 
