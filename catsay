@@ -1,4 +1,4 @@
-#!/bin/bash 
+#!/usr/bin/env bash
 # process arguments and flags 
 generate_hborder() {
     border_char=${border_char:-"="}
